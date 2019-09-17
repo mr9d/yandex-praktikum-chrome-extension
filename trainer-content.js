@@ -1,6 +1,6 @@
 function getListOfTabsNames() {
     const result = [];
-    const tabHeaders = document.querySelectorAll('.slider__visible-layer .tab__text');
+    const tabHeaders = document.querySelectorAll('.tab__text');
     tabHeaders.forEach(tabHeader => {
         result.push(tabHeader.innerHTML);
     });
@@ -12,7 +12,7 @@ function getTabsCount() {
 }
 
 function getTabName(index) {
-    const tabHeaders = document.querySelectorAll('.slider__visible-layer .tab__text');
+    const tabHeaders = document.querySelectorAll('.tab__text');
     return tabHeaders[index].innerHTML;
 }
 
@@ -46,7 +46,7 @@ function addDownloadButtons() {
     if(areButtonsThere()) {
         return;
     }
-    const tabs = document.querySelectorAll('.slider__visible-layer .tab');
+    const tabs = document.querySelectorAll('.tab');
     tabs.forEach((tab, index) => {
         const downloadButton = createDownloadButton();
         downloadButton.addEventListener("click", function (event) {
