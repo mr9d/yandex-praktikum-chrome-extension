@@ -25,7 +25,36 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
         sendResponse(await downloadTabsAsArchive(request.tabsData));
         return;
     }
+    if (request.action === "shareTabsWithCodepen") {
+        sendResponse(await shareTabsWithCodepen(request.tabsData));
+        return;
+    }
 });
+
+function shareTabsWithCodepen(allTabsData){
+    const data = {
+        "title": "Praktikum", 
+        "html": allTabsData.filter(tab=>tab.tabName == 'index.html')[0].tabCode,
+        "css": allTabsData.filter(tab=>tab.tabName.match(/css$/))
+            .map(tab => `\n\n/* file: ${tab.tabName}*/\n\n${tab.tabCode}`)
+            .join(''),
+        "js": allTabsData.filter(tab=>tab.tabName.match(/js$/))
+            .map(tab => `\n\n/* file: ${tab.tabName}*/\n\n${tab.tabCode}`)
+            .join(''),
+    }
+
+    const div = document.createElement("div");
+    div.innerHTML = `
+    <form class="share-with-codepen" action="https://codepen.io/pen/define" method="POST" target="_blank">
+        <input type="hidden" name="data" value='${JSON.stringify(data).replace(/'/g, "&apos;")}'>
+        <input type="submit" value="Create New Pen with Prefilled Data">
+    </form>
+    `;
+
+    document.querySelector("body").appendChild(div);
+    document.querySelector('.share-with-codepen').submit();
+    div.parentNode.removeChild(div);
+}
 
 function download(tabCode, tabName) {
     const blob = new Blob([tabCode], { type: "text/plain" });
