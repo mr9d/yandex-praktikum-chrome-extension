@@ -111,15 +111,15 @@ function waitForTabCodeParsing(index, callback) {
     }, 100);
 }
 
-function waitForAllTabsCodeParsing(tabsCount, callback) {
-    const interval = setInterval(function () {
-        if (allTabsCodeReady(tabsCount)) {
-            clearInterval(interval);
-            if (callback) {
-                callback();
+function waitForAllTabsCodeParsing(tabsCount) {
+    return new Promise((resolve)=>{
+        const interval = setInterval(function () {
+            if (allTabsCodeReady(tabsCount)) {
+                clearInterval(interval);
+                resolve();
             }
-        }
-    }, 100);
+        }, 100);
+    });
 }
 
 function cleanUpParsedCode(index) {
@@ -172,25 +172,23 @@ function downloadTabContent(index) {
     });
 }
 
-function downloadAllTabsContent() {
+async function downloadAllTabsContent() {
     const tabsCount = getTabsCount();
     initAllTabsCodeParsing();
-    waitForAllTabsCodeParsing(tabsCount, function () {
-        const allTabsData = getAllTabsData(tabsCount);
-        downloadTabsAsArchive(allTabsData);
-    });
+    await waitForAllTabsCodeParsing(tabsCount);
+    const allTabsData = getAllTabsData(tabsCount);
+    downloadTabsAsArchive(allTabsData);
 
     return { message: "OK" };
 }
 
 
-function shareAllTabsContent() {
+async function shareAllTabsContent() {
     const tabsCount = getTabsCount();
     initAllTabsCodeParsing();
-    waitForAllTabsCodeParsing(tabsCount, function () {
-        const allTabsData = getAllTabsData(tabsCount);
-        shareTabsWithCodepen(allTabsData);
-    });
+    await waitForAllTabsCodeParsing(tabsCount);
+    const allTabsData = getAllTabsData(tabsCount);
+    shareTabsWithCodepen(allTabsData);
 
     return { message: "OK" };
 }

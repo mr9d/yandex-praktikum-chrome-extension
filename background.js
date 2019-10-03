@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener(function () {
     });
 });
 
-chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.ext !== "Praktikum") {
         return;
     }
@@ -22,11 +22,11 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
         return;
     }
     if (request.action === "downloadTabsAsArchive") {
-        sendResponse(await downloadTabsAsArchive(request.tabsData));
+        sendResponse(downloadTabsAsArchive(request.tabsData));
         return;
     }
     if (request.action === "shareTabsWithCodepen") {
-        sendResponse(await shareTabsWithCodepen(request.tabsData));
+        sendResponse(shareTabsWithCodepen(request.tabsData));
         return;
     }
 });
