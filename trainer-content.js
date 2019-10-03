@@ -135,6 +135,14 @@ function downloadTab(tabCode, tabName) {
     });
 }
 
+function shareTabsWithCodepen(allTabsData) {
+    chrome.runtime.sendMessage({
+        ext: "Praktikum",
+        action: "shareTabsWithCodepen",
+        tabsData: allTabsData
+    });
+}
+
 function downloadTabsAsArchive(allTabsData) {
     chrome.runtime.sendMessage({
         ext: "Praktikum",
@@ -175,12 +183,29 @@ function downloadAllTabsContent() {
     return { message: "OK" };
 }
 
+
+function shareAllTabsContent() {
+    const tabsCount = getTabsCount();
+    initAllTabsCodeParsing();
+    waitForAllTabsCodeParsing(tabsCount, function () {
+        const allTabsData = getAllTabsData(tabsCount);
+        shareTabsWithCodepen(allTabsData);
+    });
+
+    return { message: "OK" };
+}
+
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.ext !== "Praktikum") {
         return;
     }
     if (request.action === "downloadAllTabsContent") {
         sendResponse(downloadAllTabsContent());
+        return;
+    }
+    if (request.action === "shareAllTabsContent") {
+        shareAllTabsContent();
         return;
     }
 });
