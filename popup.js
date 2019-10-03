@@ -4,7 +4,7 @@ function sendMessageToActiveTab(message, callback) {
     });
 }
 
-document.getElementsByClassName("popup__link_downloan-all-tabs")[0]
+document.getElementsByClassName("popup__link_download-all-tabs")[0]
     .addEventListener("click", function (event) {
         sendMessageToActiveTab({
             ext: "Praktikum",
@@ -12,3 +12,13 @@ document.getElementsByClassName("popup__link_downloan-all-tabs")[0]
         });
         event.preventDefault();
     });
+
+document.querySelector(".popup__link_share-all-tabs")
+    .addEventListener("click", function (event) {
+        sendMessageToActiveTab({
+            ext: "Praktikum",
+            action: "shareAllTabsContent"
+        });
+        event.preventDefault();
+    });
+    

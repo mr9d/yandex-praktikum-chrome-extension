@@ -111,15 +111,15 @@ function waitForTabCodeParsing(index, callback) {
     }, 100);
 }
 
-function waitForAllTabsCodeParsing(tabsCount, callback) {
-    const interval = setInterval(function () {
-        if (allTabsCodeReady(tabsCount)) {
-            clearInterval(interval);
-            if (callback) {
-                callback();
+function waitForAllTabsCodeParsing(tabsCount) {
+    return new Promise((resolve)=>{
+        const interval = setInterval(function () {
+            if (allTabsCodeReady(tabsCount)) {
+                clearInterval(interval);
+                resolve();
             }
-        }
-    }, 100);
+        }, 100);
+    });
 }
 
 function cleanUpParsedCode(index) {
@@ -132,6 +132,14 @@ function downloadTab(tabCode, tabName) {
         action: "download",
         tabCode: tabCode,
         tabName: tabName
+    });
+}
+
+function shareTabsWithCodepen(allTabsData) {
+    chrome.runtime.sendMessage({
+        ext: "Praktikum",
+        action: "shareTabsWithCodepen",
+        tabsData: allTabsData
     });
 }
 
@@ -164,16 +172,27 @@ function downloadTabContent(index) {
     });
 }
 
-function downloadAllTabsContent() {
+async function downloadAllTabsContent() {
     const tabsCount = getTabsCount();
     initAllTabsCodeParsing();
-    waitForAllTabsCodeParsing(tabsCount, function () {
-        const allTabsData = getAllTabsData(tabsCount);
-        downloadTabsAsArchive(allTabsData);
-    });
+    await waitForAllTabsCodeParsing(tabsCount);
+    const allTabsData = getAllTabsData(tabsCount);
+    downloadTabsAsArchive(allTabsData);
 
     return { message: "OK" };
 }
+
+
+async function shareAllTabsContent() {
+    const tabsCount = getTabsCount();
+    initAllTabsCodeParsing();
+    await waitForAllTabsCodeParsing(tabsCount);
+    const allTabsData = getAllTabsData(tabsCount);
+    shareTabsWithCodepen(allTabsData);
+
+    return { message: "OK" };
+}
+
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.ext !== "Praktikum") {
@@ -181,6 +200,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
     if (request.action === "downloadAllTabsContent") {
         sendResponse(downloadAllTabsContent());
+        return;
+    }
+    if (request.action === "shareAllTabsContent") {
+        shareAllTabsContent();
         return;
     }
 });
