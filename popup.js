@@ -4,7 +4,7 @@ function sendMessageToActiveTab(message, callback) {
     });
 }
 
-document.getElementsByClassName("popup__link_downloan-all-tabs")[0]
+document.getElementsByClassName("popup__link_download-all-tabs")[0]
     .addEventListener("click", function (event) {
         sendMessageToActiveTab({
             ext: "Praktikum",
