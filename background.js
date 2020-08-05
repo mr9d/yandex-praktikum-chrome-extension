@@ -5,6 +5,9 @@ chrome.runtime.onInstalled.addListener(function () {
                 conditions: [
                     new chrome.declarativeContent.PageStateMatcher({
                         pageUrl: { hostEquals: 'praktikum.yandex.ru', pathPrefix: '/trainer/' }
+                    }),
+                    new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { hostEquals: 'practicum.yandex.com', pathPrefix: '/trainer/' }
                     })
                 ],
                 actions: [new chrome.declarativeContent.ShowPageAction()]
