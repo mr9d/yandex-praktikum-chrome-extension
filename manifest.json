@@ -3,7 +3,8 @@
     "description": "Additional features for Yandex.Praktikum trainer",
     "version": "1.0",
     "permissions": [
-      "https://praktikum.yandex.ru/trainer/*", 
+      "https://praktikum.yandex.ru/trainer/*",
+      "https://practicum.yandex.com/trainer/*",
       "activeTab",
       "downloads",
       "declarativeContent"
@@ -25,7 +26,10 @@
       "persistent": false
     },
     "content_scripts": [{
-        "matches": ["https://praktikum.yandex.ru/trainer/*"],
+        "matches": [
+          "https://praktikum.yandex.ru/trainer/*",
+          "https://practicum.yandex.com/trainer/*"
+        ],
         "js": ["trainer-content.js"],
         "css": ["trainer-content.css"],
         "run_at": "document_idle"
