@@ -39,12 +39,12 @@ After the installation of the extension, the download button will appear in the 
 
 Click the extension icon and press the “Download all tabs” button in the popup. The download will start soon. An archive will include all tabs' content and a screenshot of the current screen.
 
-### Share with Codepen
+### Share with CodePen
 
-Click the extension icon and press the “Share with codepen” button in the popup. You will be redirected to [codepen.io](https://codepen.io/) with your code in the proper tabs.
+Click the extension icon and press the “Share with CodePen” button in the popup. You will be redirected to [codepen.io](https://codepen.io/) with your code in the proper tabs.
 
 ## Used technologies
 
 - HTML5, CSS3, JavaScript ES6
 - Google Chrome Extension API ([documentation](https://developer.chrome.com/docs/extensions/reference/))
-- [Codepen](https://codepen.io/)
+- [CodePen](https://codepen.io/)
