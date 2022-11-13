@@ -21,7 +21,7 @@ The version represented here is final publis version. The actual version is loca
 To set up the extension to your Google Chrome, perform the following steps:
 
 1. `git clone` the repository.
-2. Open <chrome://extensions/> in your Google Chrome.
+2. Open [chrome://extensions/](chrome://extensions/) in your Google Chrome.
 3. Switch “developer mode” on.
 4. Click the “Load unpacked” button.
 5. Select cloned repo location.
@@ -37,11 +37,11 @@ After the installation of the extension, the download button will appear in the 
 
 ### Download all tabs
 
-Click the extension icon and click the “Download all tabs” button in the popup. The download will start soon. An archive will include all tabs' content and a screenshot of the current tab.
+Click the extension icon and press the “Download all tabs” button in the popup. The download will start soon. An archive will include all tabs' content and a screenshot of the current screen.
 
 ### Share with Codepen
 
-Click the extension icon and click the “Share with codepen” button in the popup. You will be redirected to [codepen.io](https://codepen.io/) with your code in the proper tabs.
+Click the extension icon and press the “Share with codepen” button in the popup. You will be redirected to [codepen.io](https://codepen.io/) with your code in the proper tabs.
 
 ## Used technologies
 
